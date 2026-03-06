@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Travelix - Discover The World</title>
+  <style>
+    /* Reset & basic styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+    body {
+      background: #fff;
+      color: #333;
+      line-height: 1.6;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    ul {
+      list-style: none;
+    }
+
+    /* HEADER */
+    header {
+      background: #3c176c;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+    .logo-icon {
+      width: 24px;
+      height: 24px;
+      background: orange;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      display: inline-block;
+    }
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav ul li a {
+      color: white;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: orange;
+    }
+    .user-actions {
+      font-size: 0.9rem;
+    }
+    .user-actions a {
+      color: white;
+      margin-left: 1rem;
+      font-weight: 600;
+    }
+
+    /* BANNER / HERO */
+    .banner {
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+      height: 400px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      padding: 0 1rem;
+    }
+    .banner::after {
+      content: "";
+      position: absolute;
+      inset:0;
+      background-color: rgba(60, 23, 108, 0.6);
+      z-index: 1;
+    }
+    .banner-content {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+    }
+    .banner h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .banner h1 .subtext {
+      font-family: 'Brush Script MT', cursive;
+      font-weight: 400;
+      font-size: 2rem;
+      display: block;
+      margin-top: -12px;
+    }
+    .btn-cta {
+      background: linear-gradient(90deg, orange, purple);
+      border: none;
+      padding: 0.75rem 2rem;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .btn-cta:hover {
+      background: linear-gradient(90deg, purple, orange);
+    }
+
+    /* SEARCH/HIGHLIGHTS SECTION */
+    .search-section {
+      background: linear-gradient(90deg, orange, purple);
+      padding: 20px 2rem;
+      color: white;
+      margin-top: -40px;
+      border-radius: 20px 20px 0 0;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .search-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+    .search-tab {
+      background: rgba(255 255 255 / 0.3);
+      padding: 8px 15px;
+      border-radius: 20px;
+      flex: 1;
+      text-align: center;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    .search-tab.active, .search-tab:hover {
+      background: white;
+      color: purple;
+    }
+    .search-form {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .search-form input, .search-form select {
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      flex: 1;
+      min-width: 140px;
+    }
+    .search-form button {
+      background: purple;
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      min-width: 110px;
+      transition: background 0.3s ease;
+    }
+    .search-form button:hover {
+      background: orange;
+    }
+
+    /* TOURS HIGHLIGHTS */
+    .tours-section {
+      max-width: 900px;
+      margin: 2rem auto 4rem auto;
+      padding: 0 1rem;
+      text-align: center;
+    }
+    .tours-section h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    .tours-section p {
+      margin-bottom: 2rem;
+      color: #555;
+    }
+    .tours-grid {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .tour-card {
+      flex: 1 1 250px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+      cursor: pointer;
+      position: relative;
+      background: #eee;
+      transition: transform 0.3s ease;
+    }
+    .tour-card:hover {
+      transform: scale(1.05);
+    }
+    .tour-img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      display: block;
+    }
+    .tour-label {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: orange;
+      padding: 5px 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: white;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .tour-title {
+      padding: 1rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    /* NEWS/BLOG SECTION */
+    .blog-section {
+      max-width: 900px;
+      margin: 4rem auto 2rem auto;
+      padding: 0 1rem;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .blog-main {
+      flex: 2 1 600px;
+    }
+    .blog-sidebar {
+      flex: 1 1 250px;
+      border-left: 1px solid #ddd;
+      padding-left: 1rem;
+    }
+    .blog-section h2 {
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .blog-post {
+      margin-bottom: 2rem;
+    }
+    .blog-post img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+    .blog-post-category {
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: purple;
+      margin-bottom: 0.3rem;
+    }
+    .blog-post-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+    .blog-post-content {
+      color: #555;
+      font-size: 1rem;
+    }
+
+    /* Sidebar */
+    .sidebar-section {
+      margin-bottom: 2rem;
+    }
+    .sidebar-section img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+    .sidebar-section h3 {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .sidebar-section p {
+      color: #555;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 1rem;
+    }
+    .social-icons a {
+      margin-right: 10px;
+      font-size: 1.4rem;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+    .social-icons a:hover {
+      color: purple;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #333;
+      padding: 2rem 1rem;
+      color: white;
+      margin-top: 4rem;
+    }
+    footer nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1rem;
+    }
+    footer nav ul li a {
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    footer nav ul li a:hover {
+      color: orange;
+    }
+    footer p {
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    /* Responsive */
+    @media(max-width: 768px) {
+      .search-form {
+        flex-direction: column;
+      }
+      nav ul {
+        gap: 0.8rem;
+      }
+      .blog-section {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .blog-sidebar {
+        border-left: none;
+        padding-left: 0;
+      }
+      .banner h1 {
+        font-size: 2rem;
+      }
+      .banner h1 .subtext {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <span class="logo-icon"></span> TRAVELIX
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">News</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="user-actions">
+      <a href="#">Login</a> | <a href="#">Register</a>
+    </div>
+  </header>
+
+  <!-- BANNER/HERO -->
+  <section class="banner" role="img" aria-label="Scenic travel destination and colorful houses on cliffs">
+    <div class="banner-content">
+      <h1>
+        DISCOVER <span class="subtext">the world</span>
+      </h1>
+      <button class="btn-cta" aria-label="Explore Now">Explore Now</button>
+    </div>
+  </section>
+
+  <!-- SEARCH / HIGHLIGHTS -->
+  <section class="search-section" aria-label="Search tours and travel options">
+    <div class="search-tabs" role="tablist">
+      <div class="search-tab active" role="tab" tabindex="0">Car Rentals</div>
+      <div class="search-tab" role="tab" tabindex="0">Flights</div>
+      <div class="search-tab" role="tab" tabindex="0">Tours</div>
+      <div class="search-tab" role="tab" tabindex="0">Cruises</div>
+      <div class="search-tab" role="tab" tabindex="0">Activities</div>
+    </div>
+    <form class="search-form" role="search" aria-labelledby="search-label">
+      <label id="search-label" class="visually-hidden">Search travel options</label>
+      <input type="text" placeholder="Destination" aria-label="Destination" />
+      <input type="date" aria-label="Check-in date" />
+      <input type="date" aria-label="Check-out date" />
+      <select aria-label="Guests">
+        <option value="1">1 Guest</option>
+        <option value="2">2 Guests</option>
+        <option value="3">3 Guests</option>
+        <option value="4">4 Guests</option>
+      </select>
+      <button type="submit" aria-label="Search travel options">Search</button>
+    </form>
+  </section>
+
+  <!-- TOURS SECTION -->
+  <section class="tours-section" aria-labelledby="best-tours">
+    <h2 id="best-tours">We have the best tours</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu commodo tortor. Suspendisse potenti.</p>
+    <div class="tours-grid">
+
+      <article class="tour-card" tabindex="0" aria-label="Tour: Mauritius - Best Seller">
+        <div class="tour-label">Best Seller</div>
+        <img
+          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+          alt="Mauritius Beach"
+          class="tour-img"
+        />
+        <h3 class="tour-title">Mauritius</h3>
+      </article>
+
+      <article class="tour-card" tabindex="0" aria-label="Tour: Greece - Best Seller">
+        <div class="tour-label">Best Seller</div>
+        <img
+          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+          alt="Greece Houses"
+          class="tour-img"
+        />
+        <h3 class="tour-title">Greece</h3>
+      </article>
+
+      <article class="tour-card" tabindex="0" aria-label="Tour: Scotland - Best Seller">
+        <div class="tour-label">Best Seller</div>
+        <img
+          src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=600&q=80"
+          alt="Scotland Landscape"
+          class="tour-img"
+        />
+        <h3 class="tour-title">Scotland</h3>
+      </article>
+    </div>
+  </section>
+
+  <!-- NEWS / BLOG -->
+  <section class="blog-section" aria-label="Travel blog and news">
+    <!-- Main blog post -->
+    <main class="blog-main" role="main">
+      <article class="blog-post" tabindex="0">
+        <div class="blog-post-category">Travel</div>
+        <h2 class="blog-post-title">My Trip to Alaska</h2>
+        <img
+          src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=700&q=80"
+          alt="Woman posing near pink wall in Alaska trip"
+        />
+        <p class="blog-post-content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent efficitur, nibh at elementum eleifend, libero tortor cursus odio, at pellentesque sapien risus sed odio. Curabitur a tincidunt justo.
+        </p>
+      </article>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="blog-sidebar" role="complementary" aria-label="About Me and Social Links">
+      <section class="sidebar-section about-me">
+        <h3>About Me</h3>
+        <img
+          src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=350&q=80"
+          alt="Portrait of a woman"
+        />
+        <p>Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
+      </section>
+
+      <section class="sidebar-section social">
+        <h3>Follow Me</h3>
+        <div class="social-icons" aria-label="Social media links">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Google"><i class="fab fa-google"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </section>
+    </aside>
+  </section>
+
+  <!-- FOOTER -->
+  <footer role="contentinfo">
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">Download</a></li>
+      </ul>
+    </nav>
+    <p>&copy; 2024 Travelix. All rights reserved.</p>
+  </footer>
+
+  <style>
+    /* visually hidden class for accessibility */
+    .visually-hidden {
+      position: absolute !important;
+      height: 1px; 
+      width: 1px; 
+      overflow: hidden;
+      clip: rect(1px, 1px, 1px, 1px); 
+      white-space: nowrap;
+    }
+  </style>
+</body>
+</html>
